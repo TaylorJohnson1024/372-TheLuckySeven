@@ -18,6 +18,7 @@ import org.json.simple.parser.ParseException;
  * 
  * @author Taylor Johnson
  * @see https://examples.javacodegeeks.com/core-java/json/java-json-parser-example/
+ * @see https://www.geeksforgeeks.org/parse-json-java/
  */
 public class Input {
     private String path;
