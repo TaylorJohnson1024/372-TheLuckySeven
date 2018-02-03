@@ -61,13 +61,18 @@ class Patient {
 		this.readings = readings;
 	}
 	
-	//adds a JSON object to the JSON array. 
-	public void addReading(JSONObject obj) {
-		
+	//adds a JSON object to the JSON array if patient ID matches
+	//returns "successful" if the object is added, and "patient id doesn't match" if unsuccessful
+	public String addReading(JSONObject obj) {
+		if((int)obj.get("patirnt_id") == id){
 		readings.add(obj);
+		return ("successful");
+		}
 		
+		return("Patient ID doesn't match");
 		}
 	
 	
 }
+
 	
