@@ -1,5 +1,6 @@
 package GroupProject1;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -118,7 +119,8 @@ public class GroupProject1 {
      */
     public static void addPatient(int index, JSONObject reading)
     {
-    	Patient newP = new Patient(reading);
+    	Patient newP = new Patient(index, true);
+    	newP.addReading(reading);
     	
     	if(index < 0)
     	{
@@ -131,13 +133,28 @@ public class GroupProject1 {
     }
     
     /**
-     * 
+     *  Collects all of the readings for each patient and puts them
+     *  in a single JSONArray. The readings are then past to 
+     *  ExportAllReadings for output.
      */
     public static void setOutput()
     {
+    	JSONArray readings = new JSONArray();
+    	
     	for(Patient p: patientList)
     	{
-    		
+    		readings.addAll(p.getReadings());
     	}
+    	
+    	try {
+    		
+    		ExportAllReadings out = new ExportAllReadings("output");
+        	out.parseJSONAndExportAllReadings(readings);
+        	
+    	}catch(FileNotFoundException e)
+    	{
+    		System.out.println("File not found");
+    	}
+    	
     }
 }
