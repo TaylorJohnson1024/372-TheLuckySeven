@@ -1,5 +1,5 @@
 # GroupProject1
-ReadMe Author: Shane Mayo
+ReadMe Author: Shane Mayo\n
 Group: The Lucky Seven
 ICS 372: Object Oriented Design and Implementation
 Assignment: Group Project 1 - Read Me
