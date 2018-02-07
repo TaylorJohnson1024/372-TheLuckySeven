@@ -17,7 +17,7 @@ The program allows a user to choose a JSON file as the input file, then
 processes the information within the file, and outputs the file into a newly created
 file.
 The program, in order to interact with a file in the JSON format, requires an
-external .jar file, which can be found here: http://www.java2s.com/Code/Jar/j/Downloadjavajsonjar.htm
+external .jar file, which can be found here: https://code.google.com/archive/p/json-simple/downloads
 The file implements functions that allow the program to interact with the JSON
 objects in the file.
 
