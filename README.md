@@ -2,10 +2,15 @@
 ReadMe Author: Shane Mayo
 
 Group: The Lucky Seven
+
 ICS 372: Object Oriented Design and Implementation
+
 Assignment: Group Project 1 - Read Me
+
 Due: 2/7/18
+
 Professor: Timmothy Carlson
+
 
 General Information
 The program allows a user to choose a JSON file as the input file, then
