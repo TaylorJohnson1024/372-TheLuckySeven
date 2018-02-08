@@ -33,7 +33,7 @@ public class ExportAllReadings
         try
         {
             fileContent = new Scanner(new File(JSONFileName)).useDelimiter("\\Z").next();
-            Object stdObj = JSONValue.parse(fileContent); 
+            Object stdObject = JSONValue.parse(fileContent); 
         
             // creating JSON Object
             JSONObject stdObj2 = new JSONObject();
@@ -43,7 +43,7 @@ public class ExportAllReadings
             Map lhm = new LinkedHashMap();
 
             // typecasting stdObj to JSONObject
-            JSONObject jsonObject = (JSONObject) stdObj;
+            JSONObject jsonObject = (JSONObject) stdObject;
 
             //get patient readings
             JSONArray patient_readings = (JSONArray) jsonObject.get("patient_readings");
@@ -63,7 +63,7 @@ public class ExportAllReadings
     public void parseJSONAndExportAllReadings(JSONArray patientReadings) throws FileNotFoundException
     {
         // creating JSON Object
-        JSONObject stdObj = new JSONObject();
+        JSONObject stdObject = new JSONObject();
         // creating JSON Array 
         JSONArray jsonArray = new JSONArray();
         //define LinkedHashMap variable 
@@ -93,7 +93,7 @@ public class ExportAllReadings
             }
         }
         // putting readings to JSONObject
-        stdObj.put("readings", jsonArray);
+        stdObject.put("readings", jsonArray);
         PrintWriter pw = new PrintWriter(ExportAllReadings.EXPORT_FILE_NAME);
         //write the export out put to the file 
         pw.write(stdObj.toJSONString());
