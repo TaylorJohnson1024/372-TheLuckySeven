@@ -22,7 +22,7 @@ import org.json.simple.parser.ParseException;
  */
 public class Input {
     private String path;
-    private FileReader reader;
+    private FileReader readFile;
     private JSONParser jsonParser;
     private JSONObject selectedJSONObject;
     private JSONArray selectedJSONArray;
@@ -40,7 +40,7 @@ public class Input {
         
         // Reads and parses the file from the path provided
         try {
-            this.reader = new FileReader(path);
+            this.readFile = new FileReader(path);
             this.jsonParser = new JSONParser();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Input.class.getName()).log(Level.SEVERE, null, ex);
