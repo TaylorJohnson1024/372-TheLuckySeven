@@ -52,8 +52,9 @@ public class GroupProject1 {
     	Input in = new Input();
     	JSONArray patientReadings = in.getJSONArray();
     	
-    	for(JSONObject reading: patientReadings)
+    	for(Object rawReading: patientReadings)
     	{
+                JSONObject reading = (JSONObject) rawReading;
     		addReading(reading);
     	}
     }
@@ -85,11 +86,11 @@ public class GroupProject1 {
     	{
     		for(int i = 0; i < patientList.size(); i++)
         	{
-        		if(patientList.get(i).getId() == reading.getInt("patient_id"))
+        		if(patientList.get(i).getId() == (int) reading.get("patient_id"))
         		{
         			patientList.get(i).addReading(reading);
         			i = patientList.size();
-        		}else if(patientList.get(i).getId() < reading.getInt("patient_id"))
+        		}else if(patientList.get(i).getId() < (int) reading.get("patient_id"))
         		{
         			addPatient(i, reading);
         			i = patientList.size();
