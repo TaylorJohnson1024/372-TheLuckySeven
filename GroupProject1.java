@@ -7,16 +7,16 @@ import org.json.simple.JSONArray;
 
 
 /**
- * Cotains main. Gets the input from Input as a JSONArray,
+ * Contains main. Gets the input from Input as a JSONArray,
  * and adds the given readings to the appropriate patient in 
  * the patientList ArrayList. New patients are added to patientList
  * if there is not already a patient with a matching id.
  * 
  * @GroupName:					The Lucky Seven
- * @MainClassAuthor: 			Christopher Neuman
+ * @MainClassAuthor:                            Christopher Neuman
  * @InputAuthor: 				Taylor Johnson
  * @PatientAuthor: 				Jacob Fulton
- * @EsportAllReadingsAuthor:	Zinet
+ * @EsportAllReadingsAuthor:                    Zinet
  * 
  */
 public class GroupProject1 {
@@ -41,7 +41,7 @@ public class GroupProject1 {
     }
     
     /**
-     * Instaciates new Input object,
+     * Instantiates new Input object,
      * then gets a JSONArray from 
      * Input. Each JSON object in
      * the JSONArray is traversed and
@@ -80,18 +80,18 @@ public class GroupProject1 {
     	 */
     	if(patientList.isEmpty())
     	{
-    		patientList.addPatient(0, reading);
+    		addPatient(0, reading);
     	}else
     	{
     		for(int i = 0; i < patientList.size(); i++)
         	{
-        		if(patientList.get(i).getPatientId() == reading.getInt("patient_id"))
+        		if(patientList.get(i).getId() == reading.getInt("patient_id"))
         		{
         			patientList.get(i).addReading(reading);
         			i = patientList.size();
-        		}else if(patientList.get(i).getPatientId() < reading.getInt("patient_id"))
+        		}else if(patientList.get(i).getId() < reading.getInt("patient_id"))
         		{
-        			patientList.addPatient(i, reading);
+        			addPatient(i, reading);
         			i = patientList.size();
         			
         		/*
@@ -103,7 +103,7 @@ public class GroupProject1 {
         		 */
         		}else if(i == patientList.size()-1) 
         		{
-        			patientList.addPatient(-1, reading);
+        			addPatient(-1, reading);
         		}
         	}
     	}
