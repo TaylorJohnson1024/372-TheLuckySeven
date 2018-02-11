@@ -1,4 +1,4 @@
-package GroupProject1;
+package groupproject1;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,16 +7,16 @@ import org.json.simple.JSONArray;
 
 
 /**
- * Cotains main. Gets the input from Input as a JSONArray,
+ * Contains main. Gets the input from Input as a JSONArray,
  * and adds the given readings to the appropriate patient in 
  * the patientList ArrayList. New patients are added to patientList
  * if there is not already a patient with a matching id.
  * 
  * @GroupName:					The Lucky Seven
- * @MainClassAuthor: 			Christopher Neuman
+ * @MainClassAuthor:                            Christopher Neuman
  * @InputAuthor: 				Taylor Johnson
  * @PatientAuthor: 				Jacob Fulton
- * @EsportAllReadingsAuthor:	Zinet
+ * @EsportAllReadingsAuthor:                    Zinet
  * 
  */
 public class GroupProject1 {
@@ -24,7 +24,7 @@ public class GroupProject1 {
 	/*
 	 * Used to keep track of the patients in the trial.
 	 */
-	static ArrayList<Patient> patientList;
+	static ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
     /**
      * 
@@ -34,7 +34,6 @@ public class GroupProject1 {
      */
     public static void main(String[] args)
     {
-    	patientList = new ArrayList<Patient>();
     	getInput();
     	
     	setOutput();
@@ -42,7 +41,7 @@ public class GroupProject1 {
     }
     
     /**
-     * Instaciates new Input object,
+     * Instantiates new Input object,
      * then gets a JSONArray from 
      * Input. Each JSON object in
      * the JSONArray is traversed and
@@ -53,9 +52,10 @@ public class GroupProject1 {
     	Input in = new Input();
     	JSONArray patientReadings = in.getJSONArray();
     	
-    	for(JSONObject reading: patientReadings)
+    	for(Object rawReading: patientReadings)
     	{
-    		addReading(reading);
+                JSONObject reading = (JSONObject) rawReading;
+                addReading(reading);
     	}
     }
     
@@ -81,31 +81,33 @@ public class GroupProject1 {
     	 */
     	if(patientList.isEmpty())
     	{
-    		patientList.addPatient(0, reading);
+    		addPatient(0, reading);
     	}else
     	{
     		for(int i = 0; i < patientList.size(); i++)
         	{
-        		if(patientList.get(i).getPatientId() == reading.getInt("patient_id"))
-        		{
-        			patientList.get(i).addReading(reading);
-        			i = patientList.size();
-        		}else if(patientList.get(i).getPatientId() < reading.getInt("patient_id"))
-        		{
-        			patientList.addPatient(i, reading);
-        			i = patientList.size();
-        			
-        		/*
-        		 * adds a new patient to the end of 
-        		 * patientList if all of patientList
-        		 * has been checked and readings id 
-        		 * is greater than every other id in
-        		 * patientList.
-        		 */
-        		}else if(i == patientList.size()-1) 
-        		{
-        			patientList.addPatient(-1, reading);
-        		}
+                    int patient_id;
+                    patient_id = Integer.parseInt((String) reading.get("patient_id"));    
+                    if(patientList.get(i).getId() == patient_id)
+                    {
+                            patientList.get(i).addReading(reading);
+                            i = patientList.size();
+                    }else if(patientList.get(i).getId() < patient_id)
+                    {
+                            addPatient(i, reading);
+                            i = patientList.size();
+
+                    /*
+                     * adds a new patient to the end of 
+                     * patientList if all of patientList
+                     * has been checked and readings id 
+                     * is greater than every other id in
+                     * patientList.
+                     */
+                    }else if(i == patientList.size()-1) 
+                    {
+                            addPatient(-1, reading);
+                    }
         	}
     	}
     }
@@ -120,7 +122,7 @@ public class GroupProject1 {
      */
     public static void addPatient(int index, JSONObject reading)
     {
-    	Patient newP = new Patient(reading.getInt("patient_id"), true);
+    	Patient newP = new Patient(index, true);
     	newP.addReading(reading);
     	
     	if(index < 0)
@@ -128,7 +130,7 @@ public class GroupProject1 {
     		patientList.add(newP);
     	}else
     	{
-    		patientList.add(reading.getInt("patient_id"), newP);
+    		patientList.add(index, newP);
     	}
     	
     }
@@ -158,5 +160,4 @@ public class GroupProject1 {
     	}
     	
     }
-  
 }
