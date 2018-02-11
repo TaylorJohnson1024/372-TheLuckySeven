@@ -16,15 +16,15 @@ import org.json.simple.JSONArray;
  * @MainClassAuthor:                            Christopher Neuman
  * @InputAuthor: 				Taylor Johnson
  * @PatientAuthor: 				Jacob Fulton
- * @EsportAllReadingsAuthor:                    Zinet
+ * @ExportAllReadingsAuthor:                    Zinet Kemal
  * 
  */
 public class GroupProject1 {
 
-	/*
-	 * Used to keep track of the patients in the trial.
-	 */
-	static ArrayList<Patient> patientList = new ArrayList<Patient>();
+    /*
+     * Used to keep track of the patients in the trial.
+     */
+    static ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
     /**
      * 
@@ -32,12 +32,9 @@ public class GroupProject1 {
      * 
      * @param args the command line arguments
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
-    	getInput();
-    	
-    	setOutput();
-    	
+    	getInputAndExportAllReadings();
     }
     
     /**
@@ -46,17 +43,22 @@ public class GroupProject1 {
      * Input. Each JSON object in
      * the JSONArray is traversed and
      * passed to addReading.
+     * finally call parseJSONAndExportAllReadings method to export all readings
      */
-    public static void getInput()
+    public static void getInputAndExportAllReadings() throws FileNotFoundException
     {
     	Input in = new Input();
     	JSONArray patientReadings = in.getJSONArray();
     	
     	for(Object rawReading: patientReadings)
     	{
-                JSONObject reading = (JSONObject) rawReading;
-                addReading(reading);
+            JSONObject reading = (JSONObject) rawReading;
+            addReading(reading);
     	}
+        
+        //export all readings 
+        ExportAllReadings out = new ExportAllReadings("output.json");
+        out.parseJSONAndExportAllReadings(in.getJSONArray());
     }
     
     /**
@@ -81,21 +83,23 @@ public class GroupProject1 {
     	 */
     	if(patientList.isEmpty())
     	{
-    		addPatient(0, reading);
-    	}else
+            addPatient(0, reading);
+    	}
+        else
     	{
-    		for(int i = 0; i < patientList.size(); i++)
-        	{
-                    int patient_id;
-                    patient_id = Integer.parseInt((String) reading.get("patient_id"));    
-                    if(patientList.get(i).getId() == patient_id)
-                    {
-                            patientList.get(i).addReading(reading);
-                            i = patientList.size();
-                    }else if(patientList.get(i).getId() < patient_id)
-                    {
-                            addPatient(i, reading);
-                            i = patientList.size();
+            for(int i = 0; i < patientList.size(); i++)
+            {
+                int patient_id;
+                patient_id = Integer.parseInt((String) reading.get("patient_id"));    
+                if(patientList.get(i).getId() == patient_id)
+                {
+                        patientList.get(i).addReading(reading);
+                        i = patientList.size();
+                }
+                else if(patientList.get(i).getId() < patient_id)
+                {
+                    addPatient(i, reading);
+                    i = patientList.size();
 
                     /*
                      * adds a new patient to the end of 
@@ -104,11 +108,12 @@ public class GroupProject1 {
                      * is greater than every other id in
                      * patientList.
                      */
-                    }else if(i == patientList.size()-1) 
-                    {
-                            addPatient(-1, reading);
-                    }
-        	}
+                }
+                else if(i == patientList.size()-1) 
+                {
+                   addPatient(-1, reading);
+                }
+            }
     	}
     }
     
@@ -127,36 +132,10 @@ public class GroupProject1 {
     	
     	if(index < 0)
     	{
-    		patientList.add(newP);
+            patientList.add(newP);
     	}else
     	{
-    		patientList.add(index, newP);
-    	}
-    	
-    }
-    
-    /**
-     *  Collects all of the readings for each patient and puts them
-     *  in a single JSONArray. The readings are then past to 
-     *  ExportAllReadings for output.
-     */
-    public static void setOutput()
-    {
-    	JSONArray readings = new JSONArray();
-    	
-    	for(Patient p: patientList)
-    	{
-    		readings.addAll(p.getReadings());
-    	}
-    	
-    	try {
-    		
-    		ExportAllReadings out = new ExportAllReadings("output");
-        	out.parseJSONAndExportAllReadings(readings);
-        	
-    	}catch(FileNotFoundException e)
-    	{
-    		System.out.println("File not found");
+            patientList.add(index, newP);
     	}
     	
     }
