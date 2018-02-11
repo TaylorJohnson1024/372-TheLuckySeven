@@ -1,4 +1,4 @@
-package GroupProject1;
+package groupproject1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +19,7 @@ import org.json.simple.JSONValue;
 public class ExportAllReadings 
 {
     //readings export filename 
-    private static String EXPORT_FILE_NAME = "readings_export.json";
+    private static final String EXPORT_FILE_NAME = "readings_export.json";
     //string to store main JSON string 
     private String JSONContent;
     
@@ -33,8 +33,21 @@ public class ExportAllReadings
         try
         {
             fileContent = new Scanner(new File(JSONFileName)).useDelimiter("\\Z").next();
-            this.setJSONContent(fileContent);
-            this.parseJSONAndExportAllReadings();
+            Object stdObject = JSONValue.parse(fileContent); 
+        
+            // creating JSON Object
+            JSONObject stdObj2 = new JSONObject();
+            // creating JSON Array 
+            JSONArray jsonArray = new JSONArray();
+            //define LinkedHashMap variable 
+            Map lhm = new LinkedHashMap();
+
+            // typecasting stdObj to JSONObject
+            JSONObject jsonObject = (JSONObject) stdObject;
+
+            //get patient readings
+            JSONArray patient_readings = (JSONArray) jsonObject.get("patient_readings");
+            parseJSONAndExportAllReadings(patient_readings);
         }
         catch(FileNotFoundException e)
         {
@@ -43,45 +56,21 @@ public class ExportAllReadings
     }
     
     /**
-    * Method to set the JSONContent class variable
-    * @param content String content from the file
-    */
-    public void setJSONContent(String content)
-    {
-        this.JSONContent = content;
-    }
-    
-    /**
-    * Method to set the JSONContent class variable
-    * @return String JSON Data
-    */
-    public String getJSONContent()
-    {
-        return this.JSONContent;
-    }
-    
-    /**
     * Method to read patient record and generates all readings export data
+     * @param patientReadings
+     * @throws java.io.FileNotFoundException
     */
-    public void parseJSONAndExportAllReadings() throws FileNotFoundException
+    public void parseJSONAndExportAllReadings(JSONArray patientReadings) throws FileNotFoundException
     {
-        Object stdObj = JSONValue.parse(this.getJSONContent()); 
-        
         // creating JSON Object
-        JSONObject stdObj2 = new JSONObject();
+        JSONObject stdObject = new JSONObject();
         // creating JSON Array 
         JSONArray jsonArray = new JSONArray();
         //define LinkedHashMap variable 
         Map lhm = new LinkedHashMap();
         
-        // typecasting stdObj to JSONObject
-        JSONObject jsonObject = (JSONObject) stdObj;
-        
-        //get patient readings
-        JSONArray patient_readings = (JSONArray) jsonObject.get("patient_readings");
-        
         // iterating patient readings
-        Iterator itr2 = patient_readings.iterator();
+        Iterator itr2 = patientReadings.iterator();
         Iterator<Map.Entry> itr1;
         while (itr2.hasNext()) 
         {
@@ -104,10 +93,10 @@ public class ExportAllReadings
             }
         }
         // putting readings to JSONObject
-        stdObj2.put("readings", jsonArray);
+        stdObject.put("readings", jsonArray);
         PrintWriter pw = new PrintWriter(ExportAllReadings.EXPORT_FILE_NAME);
         //write the export out put to the file 
-        pw.write(stdObj2.toJSONString());
+        pw.write(stdObject.toJSONString());
         //close the writer
         pw.flush();
         
