@@ -1,4 +1,4 @@
-package GroupProject1;
+package groupproject1;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class GroupProject1 {
     	for(Object rawReading: patientReadings)
     	{
                 JSONObject reading = (JSONObject) rawReading;
-    		addReading(reading);
+                addReading(reading);
     	}
     }
     
@@ -86,26 +86,28 @@ public class GroupProject1 {
     	{
     		for(int i = 0; i < patientList.size(); i++)
         	{
-        		if(patientList.get(i).getId() == (int) reading.get("patient_id"))
-        		{
-        			patientList.get(i).addReading(reading);
-        			i = patientList.size();
-        		}else if(patientList.get(i).getId() < (int) reading.get("patient_id"))
-        		{
-        			addPatient(i, reading);
-        			i = patientList.size();
-        			
-        		/*
-        		 * adds a new patient to the end of 
-        		 * patientList if all of patientList
-        		 * has been checked and readings id 
-        		 * is greater than every other id in
-        		 * patientList.
-        		 */
-        		}else if(i == patientList.size()-1) 
-        		{
-        			addPatient(-1, reading);
-        		}
+                    int patient_id;
+                    patient_id = Integer.parseInt((String) reading.get("patient_id"));    
+                    if(patientList.get(i).getId() == patient_id)
+                    {
+                            patientList.get(i).addReading(reading);
+                            i = patientList.size();
+                    }else if(patientList.get(i).getId() < patient_id)
+                    {
+                            addPatient(i, reading);
+                            i = patientList.size();
+
+                    /*
+                     * adds a new patient to the end of 
+                     * patientList if all of patientList
+                     * has been checked and readings id 
+                     * is greater than every other id in
+                     * patientList.
+                     */
+                    }else if(i == patientList.size()-1) 
+                    {
+                            addPatient(-1, reading);
+                    }
         	}
     	}
     }

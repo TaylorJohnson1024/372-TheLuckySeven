@@ -1,4 +1,4 @@
-package GroupProject1;
+package groupproject1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
