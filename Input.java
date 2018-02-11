@@ -48,7 +48,7 @@ public class Input {
         
         // Turns contents of JSON file into a JSONObject
         try {
-            this.selectedJSONObject = (JSONObject) jsonParser.parse(reader);
+            this.selectedJSONObject = (JSONObject) jsonParser.parse(readFile);
         } catch (IOException | ParseException ex) {
             Logger.getLogger(Input.class.getName()).log(Level.SEVERE, null, ex);
         }
