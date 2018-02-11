@@ -96,7 +96,7 @@ public class ExportAllReadings
         stdObject.put("readings", jsonArray);
         PrintWriter pw = new PrintWriter(ExportAllReadings.EXPORT_FILE_NAME);
         //write the export out put to the file 
-        pw.write(stdObj.toJSONString());
+        pw.write(stdObject.toJSONString());
         //close the writer
         pw.flush();
         
