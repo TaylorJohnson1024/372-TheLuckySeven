@@ -1,15 +1,12 @@
 package groupproject1;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 /**
  * Class to Export All Readings in to JSON file
@@ -19,40 +16,15 @@ import org.json.simple.JSONValue;
 public class ExportAllReadings 
 {
     //readings export filename 
-    private static final String EXPORT_FILE_NAME = "readings_export.json";
-    //string to store main JSON string 
-    private String JSONContent;
+    private String exportFileName;
     
     /**
     * Constructor
-    * @param JSONFileName filename to export all readings from
+    * @param exportFileName filename to export all readings to
     */
-    public ExportAllReadings(String JSONFileName)
+    public ExportAllReadings(String exportFileName)
     {
-        String fileContent;
-        try
-        {
-            fileContent = new Scanner(new File(JSONFileName)).useDelimiter("\\Z").next();
-            Object stdObject = JSONValue.parse(fileContent); 
-        
-            // creating JSON Object
-            JSONObject stdObj2 = new JSONObject();
-            // creating JSON Array 
-            JSONArray jsonArray = new JSONArray();
-            //define LinkedHashMap variable 
-            Map lhm = new LinkedHashMap();
-
-            // typecasting stdObj to JSONObject
-            JSONObject jsonObject = (JSONObject) stdObject;
-
-            //get patient readings
-            JSONArray patient_readings = (JSONArray) jsonObject.get("patient_readings");
-            parseJSONAndExportAllReadings(patient_readings);
-        }
-        catch(FileNotFoundException e)
-        {
-            //throw exception here 
-        }
+        this.exportFileName = exportFileName;
     }
     
     /**
@@ -94,7 +66,7 @@ public class ExportAllReadings
         }
         // putting readings to JSONObject
         stdObject.put("readings", jsonArray);
-        PrintWriter pw = new PrintWriter(ExportAllReadings.EXPORT_FILE_NAME);
+        PrintWriter pw = new PrintWriter(this.exportFileName);
         //write the export out put to the file 
         pw.write(stdObject.toJSONString());
         //close the writer
