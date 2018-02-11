@@ -24,7 +24,7 @@ public class GroupProject1 {
 	/*
 	 * Used to keep track of the patients in the trial.
 	 */
-	static ArrayList<Patient> patientList = new ArrayList<Patient>();
+	static ArrayList<Patient> patientList;
 	
     /**
      * 
@@ -34,6 +34,7 @@ public class GroupProject1 {
      */
     public static void main(String[] args)
     {
+    	patientList = new ArrayList<Patient>();
     	getInput();
     	
     	setOutput();
@@ -119,7 +120,7 @@ public class GroupProject1 {
      */
     public static void addPatient(int index, JSONObject reading)
     {
-    	Patient newP = new Patient(index, true);
+    	Patient newP = new Patient(reading.getInt("patient_id"), true);
     	newP.addReading(reading);
     	
     	if(index < 0)
@@ -127,7 +128,7 @@ public class GroupProject1 {
     		patientList.add(newP);
     	}else
     	{
-    		patientList.add(index, newP);
+    		patientList.add(reading.getInt("patient_id"), newP);
     	}
     	
     }
