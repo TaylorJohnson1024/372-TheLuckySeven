@@ -67,7 +67,7 @@ class Patient
     {
         int patient_id;
         patient_id = Integer.parseInt((String) obj.get("patient_id"));
-        if(patient_id == id)
+        if((patient_id == id)&&(inTrial == true))
         {
             readings.add(obj);
             return ("successful");
