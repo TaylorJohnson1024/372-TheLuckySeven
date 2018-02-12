@@ -43,8 +43,6 @@ public class ExportAllReadings
         
         // iterating patient readings
         Iterator itr2 = patientReadings.iterator();
-//        while(itr2.hasNext())
-//        	System.out.println(itr2.next());
         Iterator<Map.Entry> itr1;
         while (itr2.hasNext()) 
         {

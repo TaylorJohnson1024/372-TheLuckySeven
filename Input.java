@@ -24,7 +24,7 @@ import org.json.simple.parser.ParseException;
  * @see www.geeksforgeeks.org/parse-json-java/
  */
 public class Input {
-	private String path;
+	//private String path;
 	private FileReader readFile;
 	private JSONParser jsonParser;
 	private JSONObject selectedJSONObject;
