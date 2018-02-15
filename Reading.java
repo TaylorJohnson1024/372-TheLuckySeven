@@ -54,7 +54,7 @@ public class Reading {
 		rDate = new Date(L);
 	}
 
-	// =================================setters===================
+	// =================================getters===================
 
 	public String getRtype() {
 		return rType;
