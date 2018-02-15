@@ -47,7 +47,7 @@ public class ExportAllReadings
         while (itr2.hasNext()) 
         {
             itr1 = ((Map) itr2.next()).entrySet().iterator();
-            lhm = new LinkedHashMap(4);
+            lhm = new LinkedHashMap(4);  // create a new LinkedHashMap
             while (itr1.hasNext()) {
                 Map.Entry pair = itr1.next();
                 //add only selected fields to the array 
@@ -59,10 +59,12 @@ public class ExportAllReadings
                 {
                     //add the object key and value to the map variable
                     lhm.put(pair.getKey(), pair.getValue());
-                    //add the map variable to the array
-                    jsonArray.add(lhm);
+                    
                 }
+                
             }
+          //add the map variable to the array
+            jsonArray.add(lhm); // This was moved out of the inner while loop to avoid redundancy
         }
         // putting readings to JSONObject
         stdObject.put("readings", jsonArray);
